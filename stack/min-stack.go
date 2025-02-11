@@ -14,35 +14,39 @@ package main
 // solution
 //Main idea is that store global minimum with each value
 
-
 type pair struct {
-    value int
-    currMin int
+	value   int
+	currMin int
 }
 
 type MinStack struct {
-    stack []pair
+	stack []pair
 }
-
 
 func Constructor() MinStack {
-    stack := make([]pair,0)
-    return MinStack{stack}
+	stack := make([]pair, 0)
+	return MinStack{stack}
 }
 
-
-func (this *MinStack) Push(val int)  {
-    if len(this.stack) == 0 {
-        this.stack = append(this.stack,pair{val,val})
-    }else{
-        top := this.stack[len(this.stack)-1]
-        this.stack = append(this.stack,pair{val,min(val,top.currMin)})
-    }
+func (this *MinStack) Push(val int) {
+	if len(this.stack) == 0 {
+		this.stack = append(this.stack, pair{val, val})
+	} else {
+		top := this.stack[len(this.stack)-1]
+		this.stack = append(this.stack, pair{val, min(val, top.currMin)})
+	}
 }
 
+func (this *MinStack) Pop() {
+	if len(this.stack) > 0 {
+		this.stack = this.stack[:len(this.stack)-1]
+	}
+}
 
-func (this *MinStack) Pop()  {
-    if len(this.stack) > 0 {
-        this.stack = this.stack[:len(this.stack)-1]
-    }
+func (this *MinStack) Top() int {
+	return this.stack[len(this.stack)-1].value
+}
+
+func (this *MinStack) GetMin() int {
+	return this.stack[len(this.stack)-1].currMin
 }
